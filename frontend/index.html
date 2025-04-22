@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Opinion Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Public Opinion Analyzer</h1>
+        
+        <div class="search-box">
+            <input type="text" id="topicInput" 
+                   placeholder="Enter topic (e.g., 'AI Regulations')">
+            <button onclick="analyze()">Analyze</button>
+        </div>
+        
+        <div id="results" class="hidden">
+            <div class="chart-container">
+                <canvas id="sentimentChart"></canvas>
+            </div>
+            
+            <div class="columns">
+                <div class="col positive">
+                    <h3>👍 Positive Aspects</h3>
+                    <ul id="positivePoints"></ul>
+                </div>
+                
+                <div class="col negative">
+                    <h3>👎 Main Concerns</h3>
+                    <ul id="negativePoints"></ul>
+                </div>
+            </div>
+            
+            <div class="analysis-section">
+                <h3>📊 Social Impact</h3>
+                <p id="impactAnalysis"></p>
+            </div>
+            
+            <div class="summary">
+                <h3>📝 Overall Summary</h3>
+                <p id="summary"></p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
