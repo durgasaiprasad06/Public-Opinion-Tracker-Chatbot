@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Opinion Analyzer</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -35,11 +35,51 @@
             text-align: center;
             font-weight: 600;
             font-size: 2.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             letter-spacing: 1px;
             background: linear-gradient(to right, #667EEA, #8B5CF6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .intro-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .trending {
+            margin-top: 1rem;
+        }
+
+        .trending span {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
+            margin-right: 0.5rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .trending span:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
         }
 
         .search-box {
@@ -179,6 +219,24 @@
     <div class="container">
         <h1>AI Public Opinion Tracker</h1>
 
+        <div class="intro-section">
+            <h2>What is this tool?</h2>
+            <p>This AI-powered Opinion Analyzer lets you explore the public's sentiment about any topic, issue, or trend. Whether it's a social movement, political figure, tech innovation, or global crisis — just type in the topic, and we’ll analyze what people are saying using natural language processing and real-time article scanning.</p>
+            <h2>How does it work?</h2>
+            <p>Our backend scans articles, performs sentiment analysis, and extracts key positive and negative points. It then generates a chart, highlights social impact, summarizes the public view, and lists credible sources — all within seconds.</p>
+
+            <div class="trending">
+            
+                <h3 style="color: #90cdf4; margin-top: 1.5rem;">🔥 Trending Topics:</h3>
+                <h3 style="margin-top: 1.5rem;"></h3>
+                <span onclick="setTopic('AI in Education')">AI in Education</span>
+                <span onclick="setTopic('Crypto Regulations')">Crypto Regulations</span>
+                <span onclick="setTopic('Climate Change')">Climate Change</span>
+                <span onclick="setTopic('TikTok Ban')">TikTok Ban</span>
+                <span onclick="setTopic('Work From Home Culture')">Work From Home Culture</span>
+            </div>
+        </div>
+
         <div class="search-box">
             <input type="text" id="topicInput" placeholder="Enter topic (e.g., 'AI Regulations')">
             <button id="analyzeBtn" onclick="analyze()">Analyze</button>
@@ -229,7 +287,6 @@
             const btn = document.getElementById('analyzeBtn');
             btn.disabled = true;
             btn.textContent = "Analyzing...";
-            
 
             try {
                 const response = await fetch('http://localhost:5000/analyze', {
@@ -241,8 +298,6 @@
                 if (!response.ok) throw new Error('Server error: ' + response.status);
 
                 const data = await response.json();
-                console.log(data); // Debug line
-
                 if (data.error) {
                     showError(data.error);
                     return;
@@ -257,6 +312,11 @@
                 btn.disabled = false;
                 btn.textContent = "Analyze";
             }
+        }
+
+        function setTopic(text) {
+            document.getElementById('topicInput').value = text;
+            analyze();
         }
 
         function updateUI(data, topic) {
@@ -286,47 +346,28 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: {
-                                color: '#F7FAFC',
-                                font: { family: 'Poppins' }
-                            }
+                            ticks: { color: '#F7FAFC', font: { family: 'Poppins' } }
                         },
                         x: {
-                            ticks: {
-                                color: '#F7FAFC',
-                                font: { family: 'Poppins' }
-                            }
+                            ticks: { color: '#F7FAFC', font: { family: 'Poppins' } }
                         }
                     },
                     plugins: {
                         legend: { display: false },
-                        tooltip: {
-                            bodyFont: {
-                                family: 'Poppins'
-                            }
-                        }
+                        tooltip: { bodyFont: { family: 'Poppins' } }
                     }
                 }
             });
 
-            document.getElementById('positivePoints').innerHTML =
-                data.positive_points?.map(p => `<li>${p}</li>`).join('') || '<li>No data</li>';
-            document.getElementById('negativePoints').innerHTML =
-                data.negative_points?.map(p => `<li>${p}</li>`).join('') || '<li>No data</li>';
+            document.getElementById('positivePoints').innerHTML = data.positive_points?.map(p => `<li>${p}</li>`).join('') || '<li>No data</li>';
+            document.getElementById('negativePoints').innerHTML = data.negative_points?.map(p => `<li>${p}</li>`).join('') || '<li>No data</li>';
             document.getElementById('impactAnalysis').textContent = data.impact_analysis || 'No data available';
             document.getElementById('summary').textContent = data.summary || 'No summary provided';
 
             const sourcesEl = document.getElementById('sourcesList');
-            sourcesEl.innerHTML = '';
-
-            // Support for string or array format
-            if (typeof data["sources names"] === 'string') {
-                sourcesEl.innerHTML = `<li>${data["sources names"]}</li>`;
-            } else if (Array.isArray(data["sources names"])) {
-                sourcesEl.innerHTML = data["sources names"]
-                    .map(src => `<li><a href="${src}" target="_blank" style="color: #90cdf4">${src}</a></li>`)
-                    .join('');
-            }
+            sourcesEl.innerHTML = Array.isArray(data["sources names"])
+                ? data["sources names"].map(src => `<li><a href="${src}" target="_blank" style="color: #90cdf4">${src}</a></li>`).join('')
+                : `<li>${data["sources names"]}</li>`;
         }
 
         function showError(message) {
@@ -341,7 +382,6 @@
             errorToast.style.backdropFilter = 'blur(5px)';
             errorToast.style.zIndex = '1000';
             errorToast.textContent = message;
-
             document.body.appendChild(errorToast);
             setTimeout(() => errorToast.remove(), 4000);
         }
