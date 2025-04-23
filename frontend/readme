@@ -1,0 +1,31 @@
+first open the file in vs code 
+
+then  go into backend file and run or type
+
+pip install -r requirements.txt 
+
+
+then 
+
+run 
+
+
+
+python app.py
+
+
+then go into 
+
+frontend file 
+
+and click on 
+
+index.html 
+
+and click on 
+
+Go live 
+
+it will be at below seide left of your desktop vs code 
+
+and then go to website it will run 

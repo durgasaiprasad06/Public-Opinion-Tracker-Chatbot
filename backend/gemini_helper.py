@@ -19,10 +19,11 @@ def analyze_opinion(topic):
                 "negative": 25,
                 "neutral": 15
             }},
-            "positive_points": ["Point 1 🚀", "Point 2 👍", "Point 3 🌍"],
-            "negative_points": ["Issue 1 😟", "Issue 2 👎", "Issue 3 💸"],
-            "impact_analysis": "Summary...",
-            "summary": "Overall conclusion..."
+            "positive_points": ["Point 1 🚀", "Point 2 👍", "Point 3 🌍", "Point 4 🌍","Point 5 🌍"],
+            "negative_points": ["Issue 1 😟", "Issue 2 👎", "Issue 3 💸","Issue 4 💸","Issue 5 💸"],
+            "impact_analysis": "Summary in 150 words ...",
+            "summary": "Overall conclusion...",
+            "sources names": "articles and news names ",
         }}
         Requirements:
         - Return ONLY the JSON without any additional text

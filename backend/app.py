@@ -7,6 +7,7 @@ import os
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
+CORS(app)
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
