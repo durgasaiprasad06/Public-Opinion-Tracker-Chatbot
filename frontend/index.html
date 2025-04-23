@@ -201,6 +201,62 @@
             color: #ddd;
         }
 
+        /* Source Tree Styles */
+        .source-tree {
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .source-tree li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin: 0.75rem 0;
+            background: none;
+        }
+
+        .source-tree li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.8);
+        }
+
+        .source-tree li::after {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            height: 100%;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .source-tree li:last-child::after {
+            height: 50%;
+        }
+
+        .source-tree a {
+            color: #90cdf4;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .source-tree a:hover {
+            color: #667EEA;
+            text-decoration: underline;
+        }
+
+        .source-tree .source-name {
+            color: #F7FAFC;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -212,6 +268,10 @@
             .columns {
                 grid-template-columns: 1fr;
             }
+            
+            .source-tree li {
+                padding-left: 1rem;
+            }
         }
     </style>
 </head>
@@ -221,14 +281,19 @@
 
         <div class="intro-section">
             <h2>What is this tool?</h2>
-            <p>This AI-powered Opinion Analyzer lets you explore the public's sentiment about any topic, issue, or trend. Whether it's a social movement, political figure, tech innovation, or global crisis — just type in the topic, and we’ll analyze what people are saying using natural language processing and real-time article scanning.</p>
+            <p>This AI-powered Opinion Analyzer lets you explore the public's sentiment about any topic, issue, or trend. Whether it's a social movement, political figure, tech innovation, or global crisis — 
+                just type in the topic, and we’ll analyze what people are saying using natural
+                 language processing and real-time article scanning.</p>
             <h2>How does it work?</h2>
-            <p>Our backend scans articles, performs sentiment analysis, and extracts key positive and negative points. It then generates a chart, highlights social impact, summarizes the public view, and lists credible sources — all within seconds.</p>
+            <p>Our backend scans articles, performs sentiment analysis, and extracts key positive and negative points.
+                 It then generates a chart, highlights social impact, summarizes the public view, and lists credible sources — 
+ all within seconds.</p>
 
             <div class="trending">
-            
                 <h3 style="color: #90cdf4; margin-top: 1.5rem;">🔥 Trending Topics:</h3>
-                <h3 style="margin-top: 1.5rem;"></h3>
+                <div>
+                    <h3 style="margin-top: 1.5rem;"></h3>
+                </div>
                 <span onclick="setTopic('AI in Education')">AI in Education</span>
                 <span onclick="setTopic('Crypto Regulations')">Crypto Regulations</span>
                 <span onclick="setTopic('Climate Change')">Climate Change</span>
@@ -271,8 +336,8 @@
             </div>
 
             <div class="sources">
-                <h3>🔗 Sources</h3>
-                <ul id="sourcesList"></ul>
+                <h3>🔗 Source Tree</h3>
+                <ul class="source-tree" id="sourcesList"></ul>
             </div>
         </div>
     </div>
@@ -324,6 +389,7 @@
 
             document.getElementById('userPrompt').textContent = `Public opinion on "${topic}"`;
 
+            // Update Sentiment Chart
             const ctx = document.getElementById('sentimentChart').getContext('2d');
             chart = new Chart(ctx, {
                 type: 'bar',
@@ -359,15 +425,26 @@
                 }
             });
 
+            // Update Points Lists
             document.getElementById('positivePoints').innerHTML = data.positive_points?.map(p => `<li>${p}</li>`).join('') || '<li>No data</li>';
             document.getElementById('negativePoints').innerHTML = data.negative_points?.map(p => `<li>${p}</li>`).join('') || '<li>No data</li>';
+
+            // Update Analysis Texts
             document.getElementById('impactAnalysis').textContent = data.impact_analysis || 'No data available';
             document.getElementById('summary').textContent = data.summary || 'No summary provided';
 
+            // Update Source Tree
             const sourcesEl = document.getElementById('sourcesList');
-            sourcesEl.innerHTML = Array.isArray(data["sources names"])
-                ? data["sources names"].map(src => `<li><a href="${src}" target="_blank" style="color: #90cdf4">${src}</a></li>`).join('')
-                : `<li>${data["sources names"]}</li>`;
+            if (data.sources_links?.length && data.sources_names?.length) {
+                sourcesEl.innerHTML = data.sources_links.map((link, index) => `
+                    <li>
+                        <span class="source-name">${data.sources_names[index]}</span>
+                        <a href="${link}" target="_blank">${new URL(link).hostname}</a>
+                    </li>
+                `).join('');
+            } else {
+                sourcesEl.innerHTML = '<li>No sources available</li>';
+            }
         }
 
         function showError(message) {

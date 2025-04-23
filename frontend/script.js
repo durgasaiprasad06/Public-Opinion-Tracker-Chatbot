@@ -59,4 +59,14 @@ function updateUI(data) {
     // Update analysis
     document.getElementById('impactAnalysis').textContent = data.impact_analysis;
     document.getElementById('summary').textContent = data.summary;
+
+
+    
+
+
+    
+    
 }
+
+
+
