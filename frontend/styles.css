@@ -91,3 +91,90 @@ button:hover {
     padding: 1.5rem;
     border-radius: 8px;
 }
+
+<style>
+    /* Flowchart Styles */
+    .process-flow {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        position: relative;
+        padding: 2rem 0;
+    }
+
+    .process-step {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 1.5rem;
+        width: 200px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .process-step:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+    }
+
+    .process-step::after {
+        content: "➔";
+        position: absolute;
+        color: #667EEA;
+        font-size: 1.5rem;
+        right: -35px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .process-step:last-child::after {
+        display: none;
+    }
+
+    .step-number {
+        width: 30px;
+        height: 30px;
+        background: #667EEA;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: -35px auto 1rem;
+        font-weight: 600;
+    }
+
+    .step-title {
+        color: #667EEA;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .step-description {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+        .process-flow {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .process-step {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .process-step::after {
+            content: "↓";
+            right: auto;
+            bottom: -35px;
+            top: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+</style>

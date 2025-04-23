@@ -27,7 +27,7 @@ def analyze_opinion(topic):
             "negative_points": ["Issue 1 😟", "Issue 2 👎", "Issue 3 💸","Issue 4 💸","Issue 5 💸"],
             "impact_analysis": "Summary in 150 words ...",
             "summary": "Overall conclusion...",
-            "sources_names": ["Source 1", "Source 2", "Source 3", "Source 4"]
+            "sources_names": ["Source 1", "Source 2", "Source 3"]
         }}
         Requirements:
         - Return ONLY the JSON without any additional text

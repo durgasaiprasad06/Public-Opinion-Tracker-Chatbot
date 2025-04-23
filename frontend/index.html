@@ -279,28 +279,141 @@
     <div class="container">
         <h1>AI Public Opinion Tracker</h1>
 
-        <div class="intro-section">
-            <h2>What is this tool?</h2>
-            <p>This AI-powered Opinion Analyzer lets you explore the public's sentiment about any topic, issue, or trend. Whether it's a social movement, political figure, tech innovation, or global crisis — 
-                just type in the topic, and we’ll analyze what people are saying using natural
-                 language processing and real-time article scanning.</p>
-            <h2>How does it work?</h2>
-            <p>Our backend scans articles, performs sentiment analysis, and extracts key positive and negative points.
-                 It then generates a chart, highlights social impact, summarizes the public view, and lists credible sources — 
- all within seconds.</p>
 
-            <div class="trending">
-                <h3 style="color: #90cdf4; margin-top: 1.5rem;">🔥 Trending Topics:</h3>
-                <div>
-                    <h3 style="margin-top: 1.5rem;"></h3>
-                </div>
-                <span onclick="setTopic('AI in Education')">AI in Education</span>
-                <span onclick="setTopic('Crypto Regulations')">Crypto Regulations</span>
-                <span onclick="setTopic('Climate Change')">Climate Change</span>
-                <span onclick="setTopic('TikTok Ban')">TikTok Ban</span>
-                <span onclick="setTopic('Work From Home Culture')">Work From Home Culture</span>
-            </div>
+
+
+
+
+        
+
+        <<!-- Add this to your existing CSS -->
+<style>
+    /* Flowchart Styles */
+    .process-flow {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        position: relative;
+        padding: 2rem 0;
+    }
+
+    .process-step {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 1.5rem;
+        width: 200px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .process-step:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+    }
+
+    .process-step::after {
+        content: "➔";
+        position: absolute;
+        color: #667EEA;
+        font-size: 1.5rem;
+        right: -35px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .process-step:last-child::after {
+        display: none;
+    }
+
+    .step-number {
+        width: 30px;
+        height: 30px;
+        background: #667EEA;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: -35px auto 1rem;
+        font-weight: 600;
+    }
+
+    .step-title {
+        color: #667EEA;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .step-description {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+        .process-flow {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .process-step {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .process-step::after {
+            content: "↓";
+            right: auto;
+            bottom: -35px;
+            top: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+</style>
+
+<!-- Update the "How does it work?" section in your HTML -->
+<div class="intro-section">
+    <h2>What is this tool?</h2>
+    <p>This AI-powered Opinion Analyzer lets you explore the public's sentiment about any topic, issue, or trend. Whether it's a social movement, political figure, tech innovation, or global crisis — just type in the topic, and we’ll analyze what people are saying using natural language processing and real-time article scanning.</p>
+    
+    <h2>How does it work?</h2>
+    <div class="process-flow">
+        <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-title">Article Collection</div>
+            <div class="step-description">Scan recent articles & social mentions</div>
         </div>
+        <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-title">AI Analysis</div>
+            <div class="step-description">Sentiment scoring & key point extraction</div>
+        </div>
+        <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-title">Visualization</div>
+            <div class="step-description">Generate charts & impact summary</div>
+        </div>
+        <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-title">Reporting</div>
+            <div class="step-description">Compile sources & executive summary</div>
+        </div>
+    </div>
+    <div class="trending">
+        <h3 style="color: #90cdf4; margin-top: 1.5rem;">🔥 Trending Topics:</h3>
+        <div>
+            <h3 style="margin-top: 1.5rem;"></h3>
+        </div>
+        <span onclick="setTopic('trade war ')">US-China trade war </span>
+        <span onclick="setTopic('china india land dispute')">India china land dispute</span>
+        <span onclick="setTopic('India gdp future growth')">India's gdp future growth</span>
+        <span onclick="setTopic('AI in Education')">AI in Education</span>
+        <span onclick="setTopic('Crypto Regulations in india')">Crypto Regulations in india</span>
+    </div>    
+</div>
 
         <div class="search-box">
             <input type="text" id="topicInput" placeholder="Enter topic (e.g., 'AI Regulations')">
@@ -340,7 +453,6 @@
                 <ul class="source-tree" id="sourcesList"></ul>
             </div>
         </div>
-    </div>
 
     <script>
         let chart = null;
